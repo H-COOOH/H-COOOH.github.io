@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<script src="/a.js" type="text/javascript"></script>
+		<title>记事本-查看</title>
+	</head>
+	<body onload=L()>
+		<h1 id="name"></h1>
+		<div id="main" style="width:800"></div>
+		<script>
+			function L()
+			{
+				var name=localStorage.ntsname;
+				var main=localStorage.getItem(name);
+				var u="",v="",w;
+				for (var i=0;i<main.length;i++)
+				{
+					if (main[i]=="{")
+					{
+						while(main[i+1]!="|")
+						{
+							v+=main[i+1];
+							i++;
+						}
+						i++;
+						if (v=="#")
+						{w="<h2>";}
+						if (v=="/")
+						{w="<i>";}
+						if (v=="*")
+						{w="<b>";}
+						if (v=="+")
+						{w="<big>";}
+						if (v=="-")
+						{w="<small>";}
+						if (v=="?")
+						{w="<del>";}
+						if (v=="!")
+						{w="<ins>";}
+						if (v=="r")
+						{w="<span style=\"color:red\">";}
+						if (v=="g")
+						{w="<span style=\"color:green\">";}
+						if (v=="b")
+						{w="<span style=\"color:blue\">";}
+						u+=w;
+					}
+					else if (main[i]=="}")
+					{
+						if (v=="#")
+						{w="</h2>";}
+						if (v=="/")
+						{w="</i>";}
+						if (v=="*")
+						{w="</b>";}
+						if (v=="+")
+						{w="</big>";}
+						if (v=="-")
+						{w="</small>";}
+						if (v=="?")
+						{w="</del>";}
+						if (v=="!")
+						{w="</ins>";}
+						if (v=="r"||v=="g"||v=="b")
+						{w="</span>";}
+						u+=w;
+						v="";
+					}
+					else if (main[i]=="\n")
+					{u+="</p><p>";}
+					else if (main[i]=="\\")
+					{i++;u+=main[i];}
+					else
+					{u+=main[i];}
+				}
+				document.getElementById("name").innerText=name;
+				document.getElementById("main").innerHTML="<p>"+u+"</p>";
+			}
+		</script>
+	</body>
+</html>

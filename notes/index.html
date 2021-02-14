@@ -1,0 +1,142 @@
+<html>
+	<head>
+		<script src="/an.js" type="text/javascript"></script>
+		<title>记事本</title>
+	</head>
+	<body onload=L()>
+		<h1>记事本</h1>
+		<button onclick=N() style="width:80px;height:35px">新建</button>
+		<font size="4"><ul id="nts" style="line-height:1.5"></ul></font>
+		<p><a href="./help.html" style="text-decoration:none;color:lime" target="_blank">帮助</a></p>
+		<script>
+			var r;
+			function L()
+			{
+				var c=0,s;
+				var u=localStorage.ntsdata;
+				if (u==undefined)
+				{
+					localStorage.ntsdata="";
+					return;
+				}
+				var n="",Al="";
+				for (var i=0;i<u.length;i++)
+				{
+					if (u[i]=="$")
+					{
+						c++;
+						s="s"+String(c);
+						i++;
+						if (u[i]=="a")
+						{Al="<li class=\"nts\"><span id=\""+s+"\">"+n+"</span>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>&emsp;<button onclick=X(\""+s+"\",1)>编辑</button>&emsp;<button onclick=R(\""+s+"\",1)>命名</button>&emsp;<button onclick=R(\""+s+"\",0)>删除</button>&emsp;<button onclick=A(\""+s+"\")>归档</button></li>"+Al;}
+						else
+						{Al="<li class=\"nts\"><span id=\""+s+"\">"+n+"</span>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>&emsp;<button onclick=R(\""+s+"\",0)>删除</button>&emsp;<button disabled>已归档</button></li>"+Al;}
+						n="";
+					}
+					else
+					{n+=u[i];}
+				}
+				document.getElementById("nts").innerHTML=Al;
+			}
+			function OK(n)
+			{
+				var an=document.querySelectorAll(".nts");
+				for (var i=0;i<an.length;i++)
+				{
+					if (n==an[i].children[0].innerText)
+					return false;
+				}
+				return true;
+			}
+			function N()
+			{
+				var n=prompt("标题：");
+				if (n==null||n=="")
+				{return;}
+				if (!OK(n))
+				{
+					alert("无法重复命名~");
+					return;
+				}
+				localStorage.ntsdata+=n+"$a";
+				localStorage.setItem(n,"");
+				L();
+			}
+			function X(x,rx)
+			{
+				localStorage.ntsname=document.getElementById(x).innerText;
+				if (rx)
+				{window.open("./edit.html");}
+				else
+				{window.open("./view.html");}
+			}
+			function R(ri,rx)
+			{
+				var n0=document.getElementById(ri).innerText,n1;
+				if (rx)
+				{
+					n1=prompt("标题：",n0);
+					if (n1==null)
+					{return;}
+					if (!OK(n1))
+					{
+						alert("无法重复命名~");
+						return;
+					}
+					localStorage.setItem(n1,localStorage.getItem(n0));
+					localStorage.removeItem(n0);
+				}
+				else
+				{
+					r=confirm("确定删除?\n此操作无法恢复!");
+					if (!r)
+					{return;}
+					localStorage.removeItem(n0);
+				}
+				var u=document.querySelectorAll(".nts");
+				var n="";
+				for (var i=u.length-1;i>=0;i--)
+				{
+					if (u[i].children[0].id!=ri)
+					{
+						if (u[i].children[3].innerText=="已归档")
+						{n+=u[i].children[0].innerText+"$A";}
+						else
+						{n+=u[i].children[0].innerText+"$a";}
+					}
+					else if (rx)
+					{
+						if (u[i].children[3].innerText=="已归档")
+						{n+=n1+"$A";}
+						else
+						{n+=n1+"$a";}
+					}
+				}
+				localStorage.ntsdata=n;
+				L();
+			}
+			function A(ri)
+			{
+				r=confirm("确定归档?\n归档后将仅支持查看和删除");
+				if (!r)
+				{return;}
+				var u=document.querySelectorAll(".nts");
+				var n="";
+				for (var i=u.length-1;i>=0;i--)
+				{
+					if (u[i].children[0].id!=ri)
+					{
+						if (u[i].children[3].innerText=="已归档")
+						{n+=u[i].children[0].innerText+"$A";}
+						else
+						{n+=u[i].children[0].innerText+"$a";}
+					}
+					else
+					{n+=u[i].children[0].innerText+"$A";}
+				}
+				localStorage.ntsdata=n;
+				L();
+			}
+		</script>
+	</body>
+</html>
