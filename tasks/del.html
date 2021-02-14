@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<script src="/an.js" type="text/javascript"></script>
+		<title>删除数据</title>
+	</head>
+	<body>
+		<h1>删除数据</h1>
+		<div id="c">
+			<p style="color:red">注意：此操作将删除选定项目下的所有数据，且<b>无法恢复</b>。</p>
+			<p>请选择您需要删除的项目：</p>
+			<input type="checkbox" id="keep" style="zoom:150%"><span>Keep</span><br>
+			<input type="checkbox" id="task" style="zoom:150%"><span>Task</span><br><br>
+			<button onclick=N() style="width:50px;height:25px">继续</button>
+			&emsp;<span>或者</span>&emsp;<a href="./index.html">取消</a>
+		</div>
+		<div id="d" style="display:none">
+			<p>这是<b>最后</b>的确认操作，请输入"I am sure."以确定。</p>
+			<input type="checkbox" id="Keep" style="zoom:150%" disabled><span>Keep</span><br>
+			<input type="checkbox" id="Task" style="zoom:150%" disabled><span>Task</span><br><br>
+			<input type="text" oninput=C() id="sure" placeholder="I am sure." style="width:100px;height:25px">
+			<button onclick=D() id="f" disabled style="width:50px;height:25px">确定</button>
+			&emsp;<span>或者</span>&emsp;<a href="./index.html">取消</a>
+		</div>
+		<script>
+			var m,n;
+			function N()
+			{
+				m=document.getElementById("keep").checked;
+				n=document.getElementById("task").checked;
+				if (m)
+				{document.getElementById("Keep").checked=true;}
+				if (n)
+				{document.getElementById("Task").checked=true;}
+				document.getElementById("c").style.display="none";
+				document.getElementById("d").style.display="block";
+			}
+			function C()
+			{
+				if (document.getElementById("sure").value=="I am sure.")
+				{document.getElementById("f").disabled=false;}
+				else
+				{document.getElementById("f").disabled=true;}
+			}
+			function D()
+			{
+				if (m)
+				{localStorage.removeItem("keeptodo");localStorage.removeItem("keepdata");}
+				if (n)
+				{localStorage.removeItem("taskdata");}
+				alert("数据已删除");
+				window.location.href="./index.html"
+			}
+		</script>
+	</body>
+</html>
