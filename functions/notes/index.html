@@ -5,7 +5,8 @@
 	</head>
 	<body onload=L()>
 		<h1>记事本</h1>
-		<button onclick=N() style="width:80px;height:35px">新建</button>
+		<button onclick=N() style="width:80px;height:35px">新建</button><br><br>
+		<input type="checkbox" id="hide" onchange=H() style="zoom:130%"><span>隐藏更多选项</span>
 		<font size="4"><ul id="nts" style="line-height:1.5"></ul></font>
 		<p><a href="./help.html" style="text-decoration:none;color:lime" target="_blank">帮助</a></p>
 		<script>
@@ -14,11 +15,18 @@
 			{
 				var c=0,s;
 				var u=localStorage.ntsdata;
+				var hide=localStorage.ntshide;
 				if (u==undefined)
 				{
 					localStorage.ntsdata="";
 					return;
 				}
+				if (hide==undefined)
+				{
+					localStorage.ntshide="false";
+					hide=false;
+				}
+				hide=(localStorage.ntshide=="true");
 				var n="",Al="";
 				for (var i=0;i<u.length;i++)
 				{
@@ -27,16 +35,27 @@
 						c++;
 						s="s"+String(c);
 						i++;
-						if (u[i]=="a")
-						{Al="<li class=\"nts\"><span id=\""+s+"\">"+n+"</span>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>&emsp;<button onclick=X(\""+s+"\",1)>编辑</button>&emsp;<button onclick=R(\""+s+"\",1)>命名</button>&emsp;<button onclick=R(\""+s+"\",0)>删除</button>&emsp;<button onclick=A(\""+s+"\")>归档</button></li>"+Al;}
+						if (hide)
+						{
+							if (u[i]=="a")
+							{Al="<li class=\"nts\"><span id=\""+s+"\">"+n+"</span>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>"+Al;}
+							else
+							{Al="<li class=\"nts\"><i id=\""+s+"\">"+n+"</i>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>"+Al;}
+						}
 						else
-						{Al="<li class=\"nts\"><span id=\""+s+"\">"+n+"</span>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>&emsp;<button onclick=R(\""+s+"\",0)>删除</button>&emsp;<button disabled>已归档</button></li>"+Al;}
+						{
+							if (u[i]=="a")
+							{Al="<li class=\"nts\"><span id=\""+s+"\">"+n+"</span>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>&emsp;<button onclick=X(\""+s+"\",1)>编辑</button>&emsp;<button onclick=R(\""+s+"\",1)>命名</button>&emsp;<button onclick=R(\""+s+"\",0)>删除</button>&emsp;<button onclick=A(\""+s+"\")>归档</button></li>"+Al;}
+							else
+							{Al="<li class=\"nts\"><i id=\""+s+"\">"+n+"</i>&emsp;&emsp;<button onclick=X(\""+s+"\",0) style=\"width:60\">查看</button>&emsp;<button onclick=R(\""+s+"\",0)>删除</button>&emsp;<button disabled>已归档</button></li>"+Al;}
+						}
 						n="";
 					}
 					else
 					{n+=u[i];}
 				}
 				document.getElementById("nts").innerHTML=Al;
+				document.getElementById("hide").checked=hide;
 			}
 			function OK(n)
 			{
@@ -135,6 +154,11 @@
 					{n+=u[i].children[0].innerText+"$A";}
 				}
 				localStorage.ntsdata=n;
+				L();
+			}
+			function H()
+			{
+				localStorage.ntshide=document.getElementById("hide").checked;
 				L();
 			}
 		</script>
