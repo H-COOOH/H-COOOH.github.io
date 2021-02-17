@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<script src="/an.js" type="text/javascript"></script>
+		<script src="/functions/words/size.js" type="text/javascript"></script>
+		<script src="/functions/words/AES.js" type="text/javascript"></script>
+		<title>管理所有数据</title>
+	</head>
+	<body>
+		<div id="go">
+			<h1>导入/导出所有数据</h1>
+			<span>请选择</span>
+			<button onclick=S(0) style="width:100px;height:40px">导入</button>
+			<span>或</span>
+			<button onclick=S(1) style="width:100px;height:40px">导出</button>
+		</div>
+		<div id="in" style="display:none">
+			<h1>导入</h1>
+			<textarea id="itxt" rows="30" cols="50"></textarea><br><br>
+			<input type="password" id="ikey" placeholder="请输入密码" style="width:300px;height:35px">
+			<button onclick=IN() style="width:70px;height:35px">确定</button><br><br>
+			<span>您正在导入您的所有数据。</span><br><br>
+			<span style="color:red">注意：此操作将覆盖原有数据。若密码错误，现有数据也将被清空！</span>
+		</div>
+		<div id="out" style="display:none">
+			<h1>导出</h1>
+			<textarea id="otxt" rows="30" cols="50" readonly></textarea><br><br>
+			<input type="password" id="okey" placeholder="请输入密码" style="width:374px;height:35px"><br>
+			<input type="password" id="oKey" placeholder="请确认密码" style="width:300px;height:35px">
+			<button onclick=OUT() style="width:70px;height:35px">确定</button><br><br>
+			<span>您正在导出您的所有数据，为保护您的数据安全，请使用强密码，并牢记密码。</span><br><br>
+			<span style="color:red">注意：若密码被遗忘，数据将无法恢复！</span>
+		</div>
+	</body>
+	<script>
+		var r,m,n,u,k,K;
+		function S(o)
+		{
+			if (o)
+			{document.getElementById("out").style.display="block";}
+			else
+			{document.getElementById("in").style.display="block";}
+			document.getElementById("go").style.display="none";
+		}
+		function din(iF)
+		{
+			var iname="",idata="",ik=false;
+			for (var i=0;i<iF.length;i++)
+			{
+				if (iF[i]=="∅")
+				{
+					if (ik)
+					{
+						localStorage.setItem(iname,idata);
+						ik=false;
+						iname="";
+						idata="";
+					}
+					else
+					{ik=true;}
+				}
+				else if (ik)
+				{idata+=iF[i];}
+				else
+				{iname+=iF[i];}
+			}
+		}
+		function dout()
+		{
+			var oF="";
+			for (var i=0;i<localStorage.length;i++)
+			{oF+=localStorage.key(i)+"∅"+localStorage.getItem(localStorage.key(i))+"∅";}
+			return oF;
+		}
+		function IN()
+		{
+			r=confirm("确定导入?");
+			if (!r)
+			{return;}
+			m=document.getElementById("itxt").value;
+			k=document.getElementById("ikey").value;
+			u=LZString.decompressFromUTF16(m);
+			n=CryptoJS.AES.decrypt(u,k).toString(CryptoJS.enc.Utf8);
+			din(n);
+			alert("导入成功!");
+		}
+		function OUT()
+		{
+			k=document.getElementById("okey").value;
+			K=document.getElementById("oKey").value;
+			if (k!=K)
+			{
+				alert("密码不一致!");
+				return;
+			}
+			m=dout();
+			u=CryptoJS.AES.encrypt(m,k).toString();
+			n=LZString.compressToUTF16(u);
+			document.getElementById("otxt").value=n;
+			document.getElementById("otxt").select();
+			if (document.execCommand("Copy"))
+			alert("复制成功!");
+		}		
+	</script>
+</html>
