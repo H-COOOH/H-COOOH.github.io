@@ -17,18 +17,18 @@
 			<h1>导入</h1>
 			<textarea id="itxt" rows="30" cols="50"></textarea><br><br>
 			<input type="password" id="ikey" placeholder="请输入密码" style="width:300px;height:35px">
-			<button onclick=IN() style="width:70px;height:35px">确定</button><br><br>
-			<span>您正在导入您的所有数据。</span><br><br>
-			<span style="color:red">注意：此操作将覆盖原有数据。若密码错误，现有数据也将被清空！</span>
+			<button onclick=IN() style="width:70px;height:35px">确定</button>
+			<p>您正在导入您的所有数据。</p>
+			<p style="color:red">注意：此操作将覆盖原有数据。</p>
 		</div>
 		<div id="out" style="display:none">
 			<h1>导出</h1>
 			<textarea id="otxt" rows="30" cols="50" readonly></textarea><br><br>
 			<input type="password" id="okey" placeholder="请输入密码" style="width:374px;height:35px"><br>
 			<input type="password" id="oKey" placeholder="请确认密码" style="width:300px;height:35px">
-			<button onclick=OUT() style="width:70px;height:35px">确定</button><br><br>
-			<span>您正在导出您的所有数据，为保护您的数据安全，请使用强密码，并牢记密码。</span><br><br>
-			<span style="color:red">注意：若密码被遗忘，数据将无法恢复！</span>
+			<button onclick=OUT() style="width:70px;height:35px">确定</button>
+			<p>您正在导出您的所有数据，为保护您的数据安全，请使用强密码，并牢记密码。</p>
+			<p style="color:red">注意：若密码被遗忘，数据将无法恢复！</p>
 		</div>
 	</body>
 	<script>
