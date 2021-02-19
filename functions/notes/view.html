@@ -11,17 +11,13 @@
 			{
 				var name=localStorage.ntsname;
 				var main=localStorage.getItem(name);
-				var u="",v="",w;
+				var u="",v="",w="";
 				for (var i=0;i<main.length;i++)
 				{
 					if (main[i]=="{")
 					{
-						while(main[i+1]!="|")
-						{
-							v+=main[i+1];
-							i++;
-						}
-						i++;
+						for (i++;main[i]!="|"&&i<main.length;i++)
+						{v+=main[i];}
 						if (v=="#")
 						{w="<h2>";}
 						if (v=="/")

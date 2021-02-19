@@ -5,12 +5,14 @@
 	</head>
 	<body onload=L() id="main">
 		<h1>写心情</h1>
-		<div>
-			<button onclick=edit0("",true) style="width:200px;height:40px">添加</button><br><br>
+		<div id="view">
+			<button onclick=edit0("",true) style="width:200px;height:40px">添加</button>&emsp;
+			<a href="./with.html">退出并加密数据</a><br><br>
 			<div id="mood" style="font-size:18px"></div>
 		</div>
 		<div id="edit" style="display:none">
-			<textarea id="new" rows="6" cols="50"></textarea>
+			<textarea id="new" oninput=S() rows="6" cols="50"></textarea>
+			<div id="see"></div>
 			<button onclick=Y() class="n_bu">保存</button>
 			<button onclick=N() class="n_bu">取消</button>
 		</div>
@@ -34,6 +36,17 @@
 				margin:2%;
 				font-size:18px;
 			}
+			#see
+			{
+				width:48%;
+				height:90%;
+				position:absolute;
+				top:0%;right:0%;
+				margin:2%;
+				background-color:paleturquoise;
+				font-size:18px;
+				overflow:auto;
+			}
 			.n_bu
 			{
 				width:20%;
@@ -47,17 +60,13 @@
 			var c=0;
 			function O(to)
 			{
-				var ki="",ui,re="";
+				var ki="",ui="",re="";	
 				for (var i=0;i<to.length;i++)
 				{
 					if (to[i]=="{")
 					{
-						while(to[i+1]!="|")
-						{
-							ki+=to[i+1];
-							i++;
-						}
-						i++;
+						for (i++;to[i]!="|"&&i<to.length;i++)
+						{ki+=to[i];}
 						if (ki=="#")
 						{ui="<h2>";}
 						if (ki=="/")
@@ -112,6 +121,12 @@
 			}
 			function L()
 			{
+				if (localStorage.moodwith=="true")
+				{
+					document.getElementById("view").style.display="none";
+					window.location.href="./need.html";
+					return;
+				}
 				var us=localStorage.mooddata,ui="",ut="",uf=false,ua="";
 				if (us==undefined)
 				{
@@ -147,6 +162,7 @@
 				_data=txt;
 				at=q;
 				document.getElementById("new").value=txt;
+				S();
 				scrollTo(0,0);
 				document.getElementById("edit").style.display="block";
 				document.getElementById("main").style.overflow="hidden";
@@ -259,6 +275,8 @@
 				localStorage.mooddata=ua;
 				L();
 			}
+			function S()
+			{document.getElementById("see").innerHTML=O(document.getElementById("new").value);}
 		</script>
 	</body>
 </html>
