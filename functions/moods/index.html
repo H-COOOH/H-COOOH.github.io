@@ -10,6 +10,7 @@
 			<a href="./with.html">退出并加密数据</a><br><br>
 			<div id="mood" style="font-size:18px"></div>
 		</div>
+		<p><a href="../notes/help.html" style="text-decoration:none;color:lime" target="_blank">帮助</a></p>
 		<div id="edit" style="display:none">
 			<textarea id="new" oninput=S() rows="6" cols="50"></textarea>
 			<div id="see"></div>
@@ -243,6 +244,7 @@
 				}
 				localStorage.mooddata=ua;
 				L();
+				window.location.hash="#c"+String(nt);
 			}
 			function D(nt)
 			{

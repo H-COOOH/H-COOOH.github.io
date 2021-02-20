@@ -10,9 +10,9 @@
 		<h1>写心情</h1>
 		<h2>请提供密码以继续</h2>
 		<div id="view">
-			<input type="password" id="key" placeholder="请输入密码" style="width:300px;height:35px"><br><br>
+			<input type="password" id="key" placeholder="请输入密码" onkeydown=G() style="width:300px;height:35px"><br><br>
 			<button onclick=S() id="Si" style="width:130px;height:35px">确定</button>&emsp;&emsp;
-			<button onclick=C() id="Ci" style="width:130px;height:35px">重置</button><br><br>
+			<button onclick=C() id="Ci" style="width:130px;height:35px">重置</button><br>
 			<p id="Ei" style="color:red;display:none">密码错误，请重试</p>
 		</div>
 		<script>
@@ -24,6 +24,7 @@
 					window.location.href="./index.html";
 					return;
 				}
+				document.getElementById("key").focus();
 			}
 			function S()
 			{
@@ -45,7 +46,7 @@
 				}
 				else
 				{
-					document.getElementById("Ei").style.display="inline";
+					document.getElementById("Ei").style.display="block";
 					document.getElementById("Ci").disabled=false;
 				}
 			}
@@ -54,6 +55,11 @@
 				document.getElementById("key").value="";
 				document.getElementById("Ei").style.display="none";
 				document.getElementById("Si").disabled=false;
+			}
+			function G()
+			{
+				if (event.keyCode==13)
+				{document.getElementById("Si").click();}
 			}
 		</script>
 	</body>
