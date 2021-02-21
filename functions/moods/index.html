@@ -9,8 +9,8 @@
 			<button onclick=edit0("",true) style="width:200px;height:40px">添加</button>&emsp;
 			<a href="./with.html">退出并加密数据</a><br><br>
 			<div id="mood" style="font-size:18px"></div>
+			<p><a href="../notes/help.html" style="text-decoration:none;color:lime" target="_blank">帮助</a></p>
 		</div>
-		<p><a href="../notes/help.html" style="text-decoration:none;color:lime" target="_blank">帮助</a></p>
 		<div id="edit" style="display:none">
 			<textarea id="new" oninput=S() rows="6" cols="50"></textarea>
 			<div id="see"></div>
@@ -157,7 +157,7 @@
 				}
 				document.getElementById("mood").innerHTML=ua;
 			}
-			var _data,ndata,at,ent;
+			var _data,ndata,at,ent,eh;
 			function edit0(txt,q)
 			{
 				_data=txt;
@@ -193,6 +193,7 @@
 			function e(nt)
 			{
 				ent=nt;
+				eh=document.body.scrollTop;
 				var us=localStorage.mooddata,ui="",uf=false;
 				c=0;
 				for (var i=0;i<us.length;i++)
@@ -244,7 +245,7 @@
 				}
 				localStorage.mooddata=ua;
 				L();
-				window.location.hash="#c"+String(nt);
+				document.body.scrollTop=eh;
 			}
 			function D(nt)
 			{
