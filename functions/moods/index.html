@@ -61,7 +61,7 @@
 			var c=0;
 			function O(to)
 			{
-				var ki="",ui="",re="";	
+				var ki="",ui="",re="<p>";	
 				for (var i=0;i<to.length;i++)
 				{
 					if (to[i]=="{")
@@ -118,7 +118,7 @@
 					else
 					{re+=to[i];}
 				}
-				return re;
+				return re+"</p>";
 			}
 			function L()
 			{

@@ -4,17 +4,107 @@
 		<title>记事本-编辑</title>
 	</head>
 	<body onload=L()>
-		<h1 id="name"></h1>
-		<textarea id="main" oninput=C() rows="30" cols="80" style="font-size:16px"></textarea><br><br>
-		<button onclick=S() style="width:500px;height:35px">保存</button>
-		&emsp;<span>字数统计：共</span><b id="cout"></b><span>字</span>
+		<div>
+			<h1 id="name"></h1>
+			<textarea id="main" oninput=C()></textarea><br><br>
+			<button onclick=S() style="width:20%;height:5%;margin-left:1%;">保存</button>
+			<button onclick=L() style="width:10%;height:5%;margin-left:1%;">取消</button>
+			&emsp;&emsp;<span>字数统计：共</span><b id="cout"></b><span>字</span>
+		</div>
+		<div id="see"></div>
+		<style>
+			#main
+			{
+				width:44%;
+				height:81%;
+				font-size:16px;
+				box-sizing:border-box;
+				margin-left:1%;
+			}
+			#see
+			{
+				width:48%;
+				height:93%;
+				position:absolute;
+				top:0%;right:0%;
+				background-color:azure;
+				box-sizing:border-box;
+				margin:2%;
+				padding:1%;
+				font-size:18px;
+				overflow:auto;
+			}
+		</style>
 		<script>
 			var name;
+			function O(to)
+			{
+				var ki="",ui="",re="<p>";	
+				for (var i=0;i<to.length;i++)
+				{
+					if (to[i]=="{")
+					{
+						for (i++;to[i]!="|"&&i<to.length;i++)
+						{ki+=to[i];}
+						if (ki=="#")
+						{ui="<h2>";}
+						if (ki=="/")
+						{ui="<i>";}
+						if (ki=="*")
+						{ui="<b>";}
+						if (ki=="+")
+						{ui="<big>";}
+						if (ki=="-")
+						{ui="<small>";}
+						if (ki=="?")
+						{ui="<del>";}
+						if (ki=="!")
+						{ui="<ins>";}
+						if (ki=="r")
+						{ui="<span style=\"color:red\">";}
+						if (ki=="g")
+						{ui="<span style=\"color:green\">";}
+						if (ki=="b")
+						{ui="<span style=\"color:blue\">";}
+						re+=ui;
+					}
+					else if (to[i]=="}")
+					{
+						if (ki=="#")
+						{ui="</h2>";}
+						if (ki=="/")
+						{ui="</i>";}
+						if (ki=="*")
+						{ui="</b>";}
+						if (ki=="+")
+						{ui="</big>";}
+						if (ki=="-")
+						{ui="</small>";}
+						if (ki=="?")
+						{ui="</del>";}
+						if (ki=="!")
+						{ui="</ins>";}
+						if (ki=="r"||ki=="g"||ki=="b")
+						{ui="</span>";}
+						re+=ui;
+						ki="";
+					}
+					else if (to[i]=="\n")
+					{re+="</p><p>";}
+					else if (to[i]=="\\")
+					{i++;re+=to[i];}
+					else
+					{re+=to[i];}
+				}
+				return re+"</p>";
+			}
 			function L()
 			{
 				name=localStorage.ntsname;
 				document.getElementById("name").innerText=name;
-				document.getElementById("main").value=localStorage.getItem(name);
+				var main=localStorage.getItem(name);
+				document.getElementById("main").value=main;
+				document.getElementById("see").innerHTML=O(main);
 				C();
 			}
 			function C()
@@ -31,6 +121,7 @@
 					{c++;}
 				}
 				document.getElementById("cout").innerText=String(c);
+				document.getElementById("see").innerHTML=O(main);
 			}
 			function S()
 			{

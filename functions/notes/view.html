@@ -5,71 +5,75 @@
 	</head>
 	<body onload=L()>
 		<h1 id="name"></h1>
-		<div id="main" style="width:800"></div>
+		<div id="main" style="margin:2%"></div>
 		<script>
+			function O(to)
+			{
+				var ki="",ui="",re="<p>";	
+				for (var i=0;i<to.length;i++)
+				{
+					if (to[i]=="{")
+					{
+						for (i++;to[i]!="|"&&i<to.length;i++)
+						{ki+=to[i];}
+						if (ki=="#")
+						{ui="<h2>";}
+						if (ki=="/")
+						{ui="<i>";}
+						if (ki=="*")
+						{ui="<b>";}
+						if (ki=="+")
+						{ui="<big>";}
+						if (ki=="-")
+						{ui="<small>";}
+						if (ki=="?")
+						{ui="<del>";}
+						if (ki=="!")
+						{ui="<ins>";}
+						if (ki=="r")
+						{ui="<span style=\"color:red\">";}
+						if (ki=="g")
+						{ui="<span style=\"color:green\">";}
+						if (ki=="b")
+						{ui="<span style=\"color:blue\">";}
+						re+=ui;
+					}
+					else if (to[i]=="}")
+					{
+						if (ki=="#")
+						{ui="</h2>";}
+						if (ki=="/")
+						{ui="</i>";}
+						if (ki=="*")
+						{ui="</b>";}
+						if (ki=="+")
+						{ui="</big>";}
+						if (ki=="-")
+						{ui="</small>";}
+						if (ki=="?")
+						{ui="</del>";}
+						if (ki=="!")
+						{ui="</ins>";}
+						if (ki=="r"||ki=="g"||ki=="b")
+						{ui="</span>";}
+						re+=ui;
+						ki="";
+					}
+					else if (to[i]=="\n")
+					{re+="</p><p>";}
+					else if (to[i]=="\\")
+					{i++;re+=to[i];}
+					else
+					{re+=to[i];}
+				}
+				return re+"</p>";
+			}
 			function L()
 			{
 				var name=localStorage.ntsname;
 				var main=localStorage.getItem(name);
-				var u="",v="",w="";
-				for (var i=0;i<main.length;i++)
-				{
-					if (main[i]=="{")
-					{
-						for (i++;main[i]!="|"&&i<main.length;i++)
-						{v+=main[i];}
-						if (v=="#")
-						{w="<h2>";}
-						if (v=="/")
-						{w="<i>";}
-						if (v=="*")
-						{w="<b>";}
-						if (v=="+")
-						{w="<big>";}
-						if (v=="-")
-						{w="<small>";}
-						if (v=="?")
-						{w="<del>";}
-						if (v=="!")
-						{w="<ins>";}
-						if (v=="r")
-						{w="<span style=\"color:red\">";}
-						if (v=="g")
-						{w="<span style=\"color:green\">";}
-						if (v=="b")
-						{w="<span style=\"color:blue\">";}
-						u+=w;
-					}
-					else if (main[i]=="}")
-					{
-						if (v=="#")
-						{w="</h2>";}
-						if (v=="/")
-						{w="</i>";}
-						if (v=="*")
-						{w="</b>";}
-						if (v=="+")
-						{w="</big>";}
-						if (v=="-")
-						{w="</small>";}
-						if (v=="?")
-						{w="</del>";}
-						if (v=="!")
-						{w="</ins>";}
-						if (v=="r"||v=="g"||v=="b")
-						{w="</span>";}
-						u+=w;
-						v="";
-					}
-					else if (main[i]=="\n")
-					{u+="</p><p>";}
-					else if (main[i]=="\\")
-					{i++;u+=main[i];}
-					else
-					{u+=main[i];}
-				}
 				document.getElementById("name").innerText=name;
-				document.getElementById("main").innerHTML="<p>"+u+"</p>";
+				document.getElementById("main").innerHTML=O(main);
 			}
 		</script>
 	</body>
