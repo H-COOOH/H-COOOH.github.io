@@ -7,13 +7,9 @@
 		<h2>Sorry，此页面不存在 :(</h2>
 		<h3>3s后返回上一页</h3>
 		<script>
-			function R()
-			{
-				window.history.go(-1);
-			}
 			function L()
 			{
-				setTimeout(R,3000);
+				setTimeout("window.history.go(-1)",3000);
 			}
 		</script>
 	</body>
