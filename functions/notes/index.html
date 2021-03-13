@@ -86,9 +86,9 @@
 			{
 				var ux=document.getElementById(x).innerText;
 				if (rx)
-				{window.open("./edit.html");localStorage.ntename=ux;}
+				{sessionStorage.ntename=ux;window.open("./edit.html");}
 				else
-				{window.open("./view.html");localStorage.ntvname=ux;}
+				{sessionStorage.ntvname=ux;window.open("./view.html");}
 			}
 			function R(ri,rx)
 			{
