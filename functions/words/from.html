@@ -25,9 +25,10 @@
 			<textarea id="otxt" rows="30" cols="50" readonly></textarea><br><br>
 			<input type="password" id="okey" placeholder="请输入密码" style="width:374px;height:35px"><br>
 			<input type="password" id="oKey" placeholder="请确认密码" style="width:300px;height:35px">
-			<button onclick=OUT() style="width:70px;height:35px">确定</button><br><br>
+			<button id="ok" onclick=OUT() style="width:70px;height:35px">确定</button><br><br>
 			<span style="color:red">注意：若密码被遗忘，数据将无法恢复！</span>
 		</div>
+		<p><a href="./index.html" style="text-decoration:none;color:lime">主页</a></p>
 	</body>
 	<script>
 		var r,m,n,u,k,K;
@@ -55,6 +56,7 @@
 		{
 			document.getElementById("okey").disabled=true;
 			document.getElementById("oKey").disabled=true;
+			document.getElementById("ok").disabled=true;
 			k=document.getElementById("okey").value;
 			K=document.getElementById("oKey").value;
 			if (k!=K)
@@ -69,7 +71,6 @@
 			document.getElementById("otxt").select();
 			if (document.execCommand("Copy"))
 			{alert("复制成功!");}
-			location.href="./index.html"
 		}		
 	</script>
 </html>
