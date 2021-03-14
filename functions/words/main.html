@@ -11,10 +11,11 @@
 		<button onclick=G() id="Gi" style="height:30px;width:100px">管理</button>
 		<button onclick=E() id="Ei" style="height:30px;width:100px;display:none">完成</button>
 		<br><br><span>选择错误率不小于</span><input type="number" id="th" style="height:25px;width:40px"><span>%的单词</span>
-		&emsp;<button onclick=C() id="Ci" style="height:25px;width:70px">确定</button>
+		&emsp;<button onclick=C() id="Ci" style="height:25px;width:70px">确定</button><br>
+		<input type="checkbox" id="no" style="zoom:140%">&emsp;<span>删除时不显示提示信息</span>
 		<font size="4"><ul id="all"></ul></font>
 		<script>
-			var c=0,r,Al="",than=0;
+			var c=0,Al="",than=0;
 			function a(m,n,e)
 			{
 				var sc="s"+String(c);
@@ -97,11 +98,14 @@
 			function D(to)
 			{
 				document.getElementById("Ei").click();
-				r=confirm("确定删除?");
-				if (!r)
+				if (!document.getElementById("no").checked)
 				{
-					document.getElementById("Gi").click();
-					return;
+					var r=confirm("确定删除?");
+					if (!r)
+					{
+						document.getElementById("Gi").click();
+						return;
+					}
 				}
 				var dm=document.getElementById("C"+to).innerText;
 				var dn=document.getElementById("E"+to).innerText;
