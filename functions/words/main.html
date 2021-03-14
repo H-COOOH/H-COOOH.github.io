@@ -18,8 +18,10 @@
 			var c=0,Al="",than=0;
 			function a(m,n,e)
 			{
+				if (e=="NaN")
+				{e="--"}
 				var sc="s"+String(c);
-				Al="<li class=\"ss\" id=\""+sc+"\"><span id=\"C"+sc+"\">"+m+"</span>&emsp;<span id=\"E"+sc+"\">"+n+"</span>&emsp;<i>"+e+"</i>&emsp;&emsp;<button id=\"D"+sc+"\" onclick=D(\""+sc+"\") style=\"display:none\">删除</button><button id=\"X"+sc+"\" onclick=X(\""+sc+"\") style=\"display:none\">编辑</button></li>"+Al;
+				Al="<li id=\""+sc+"\"><span>"+m+"</span>&emsp;<span>"+n+"</span>&emsp;<i>"+e+"</i>&emsp;&emsp;<button onclick=D("+c+") style=\"display:none\">删除</button><button onclick=X("+c+") style=\"display:none\">编辑</button></li>"+Al;
 			}
 			function L()
 			{
@@ -79,8 +81,8 @@
 				document.getElementById("Ei").style.display="inline";
 				for (var i=1;i<=c;i++)
 				{
-					document.getElementById("Ds"+String(i)).style.display="inline";
-					document.getElementById("Xs"+String(i)).style.display="inline";
+					document.getElementById("s"+String(i)).children[3].style.display="inline";
+					document.getElementById("s"+String(i)).children[4].style.display="inline";
 				}
 			}
 			function E()
@@ -89,8 +91,8 @@
 				document.getElementById("Ei").style.display="none";
 				for (var i=1;i<=c;i++)
 				{
-					document.getElementById("Ds"+String(i)).style.display="none";
-					document.getElementById("Xs"+String(i)).style.display="none";
+					document.getElementById("s"+String(i)).children[3].style.display="none";
+					document.getElementById("s"+String(i)).children[4].style.display="none";
 				}
 				document.getElementById("Ai").disabled=false;
 				document.getElementById("Ci").disabled=false;
@@ -107,9 +109,7 @@
 						return;
 					}
 				}
-				var dm=document.getElementById("C"+to).innerText;
-				var dn=document.getElementById("E"+to).innerText;
-				var f=0,um="",un="",ue="",ud="";
+				var f=0,um="",un="",ue="",ud="",uc=0;
 				var us=localStorage.wrddata;
 				for (var i=0;i<us.length;i++)
 				{
@@ -119,7 +119,8 @@
 					{f=2;}
 					else if (us[i]=="#")
 					{
-						if (um!=dm||un!=dn)
+						uc++;
+						if (uc!=to)
 						{ud+=um+"="+un+"$"+ue+"#";}
 						f=0;
 						um="";
@@ -140,15 +141,13 @@
 			function X(to)
 			{
 				document.getElementById("Ei").click();
-				var am=document.getElementById("C"+to).innerText;
-				var xm=prompt("编辑:",document.getElementById("C"+to).innerText);
-				if (xm==null)
-				{xm=document.getElementById("C"+to).innerText;}
-				var an=document.getElementById("E"+to).innerText;
-				var xn=prompt("编辑:",document.getElementById("E"+to).innerText);
-				if (xn==null)
-				{xn=document.getElementById("E"+to).innerText;}
-				var f=0,um="",un="",ue="",ud="";
+				var am=document.getElementById("s"+to).children[0].innerText;
+				var xm=prompt("编辑:",am);
+				if (xm==null) {xm=am}
+				var an=document.getElementById("s"+to).children[1].innerText;
+				var xn=prompt("编辑:",an);
+				if (xn==null) {xn=an;}
+				var f=0,um="",un="",ue="",ud="",uc=0;
 				var us=localStorage.wrddata;
 				for (var i=0;i<us.length;i++)
 				{
@@ -158,7 +157,8 @@
 					{f=2;}
 					else if (us[i]=="#")
 					{
-						if (am==um&&an==un)
+						uc++;
+						if (uc==to)
 						{ud+=xm+"="+xn+"$"+ue+"#";}
 						else
 						{ud+=um+"="+un+"$"+ue+"#";}
