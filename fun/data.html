@@ -67,6 +67,14 @@
 		}
 		function dout()
 		{
+			var tF=false;
+			for (var i=0;i<localStorage.length;i++)
+			{
+				if (localStorage.key(i).indexOf("∅")!=-1||localStorage.getItem(localStorage.key(i)).indexOf("∅")!=-1)
+				{tF=true;break;}
+			}
+			if (tF)
+			{return null;}
 			var oF="";
 			for (var i=0;i<localStorage.length;i++)
 			{oF+=localStorage.key(i)+"∅"+localStorage.getItem(localStorage.key(i))+"∅";}
@@ -97,6 +105,8 @@
 				return;
 			}
 			m=dout();
+			if (m==null)
+			{alert("导出失败\n分隔符\"∅\"被占用")}
 			u=CryptoJS.AES.encrypt(m,k).toString();
 			n=LZString.compressToUTF16(u);
 			document.getElementById("otxt").value=n;
